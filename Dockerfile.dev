@@ -2,8 +2,10 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0
 
 WORKDIR /src
 
-# Копируем только проект для восстановления зависимостей
-COPY *.csproj .
+# Копируем проект
+COPY *.sln .
+COPY CrmCore/*.csproj CrmCore/
+
 RUN dotnet restore
 
 # Копируем остальные файлы
@@ -12,5 +14,4 @@ COPY . .
 EXPOSE 8080
 EXPOSE 8081
 
-# Используем watch для hot reload
-CMD ["dotnet", "watch", "run", "--urls=http://0.0.0.0:8080", "--non-interactive"]
+CMD ["dotnet", "watch", "run", "--project", "CrmCore/CrmCore.csproj", "--urls=http://0.0.0.0:8080", "--non-interactive"]

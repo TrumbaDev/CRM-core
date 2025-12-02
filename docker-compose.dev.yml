@@ -31,7 +31,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=dnd_db;Username=root;Password=password
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=сrm_db;Username=root;Password=password
       - DOTNET_USE_POLLING_FILE_WATCHER=1
       - DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER=1
       - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=1
@@ -39,8 +39,9 @@ services:
       - .:/src
       - ~/.nuget/packages:/root/.nuget/packages
     command: >
-      sh -c "dotnet restore &&
-             dotnet watch run --urls=http://0.0.0.0:8080"
+      sh -c "dotnet restore CrmCore.csproj &&
+          dotnet watch run --project CrmCore.csproj --urls=http://0.0.0.0:8080"
+
     depends_on:
       postgres:
         condition: service_healthy
