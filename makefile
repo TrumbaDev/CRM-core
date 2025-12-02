@@ -34,3 +34,6 @@ rebuild: down-dev dev-build dev
 
 status-dev:
 	docker-compose -f docker-compose.dev.yml ps
+
+stop-dev:
+	docker-compose -f docker-compose.dev.yml stop
