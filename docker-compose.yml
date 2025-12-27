@@ -19,10 +19,26 @@ services:
       timeout: 5s
       retries: 5
 
+    redis:
+      image: redis:7-alpine
+      container_name: crm_redis
+      command: redis-server --appendonly yes --requirepass "redis_password"
+      ports:
+        - "6379:6379"
+      volumes:
+        - redis_data:/data
+      networks:
+        - app-network
+      healthcheck:
+        test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
   api:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: crm_api
     working_dir: /src
     ports:
@@ -31,16 +47,18 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=сrm_db;Username=root;Password=password
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=crm_db;Username=root;Password=password
+      - Redis__ConnectionString=redis:6379,password=redis_password,ssl=False,abortConnect=False
+      - Redis__InstanceName=crm_core
+      - Cache__Enabled=true
+      - Cache__DefaultExpirationMinutes=30
+      - Cache__SlidingExpirationMinutes=10
       - DOTNET_USE_POLLING_FILE_WATCHER=1
       - DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER=1
       - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=1
     volumes:
       - .:/src
       - ~/.nuget/packages:/root/.nuget/packages
-    command: >
-      sh -c "dotnet restore CrmCore.csproj &&
-          dotnet watch run --project CrmCore.csproj --urls=http://0.0.0.0:8080"
 
     depends_on:
       postgres:
@@ -62,8 +80,23 @@ services:
     networks:
       - app-network
 
+redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: crm_redis_commander
+    environment:
+      - REDIS_HOSTS=local:redis:6379:0:redis_password
+      - HTTP_USER=admin
+      - HTTP_PASSWORD=admin123
+    ports:
+      - "8082:8081"
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
 volumes:
   postgres_data:
+  redis_data:
 
 networks:
   app-network:
