@@ -47,7 +47,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=crm_db;Username=root;Password=password
+      - ConnectionStrings__Default=Host=postgres;Port=5432;Database=crm_db;Username=root;Password=password
       - Redis__ConnectionString=redis:6379,password=redis_password,ssl=False,abortConnect=False
       - Redis__InstanceName=crm_core
       - Cache__Enabled=true
