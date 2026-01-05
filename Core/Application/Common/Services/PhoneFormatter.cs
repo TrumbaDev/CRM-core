@@ -1,4 +1,4 @@
-namespace CrmCore.Application.Common.Services;
+namespace CrmCore.Core.Application.Common.Services;
 
 public static class PhoneFormatter
 {

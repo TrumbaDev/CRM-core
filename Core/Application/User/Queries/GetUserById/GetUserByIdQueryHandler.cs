@@ -1,7 +1,7 @@
-using CrmCore.Application.User.DTO;
-using CrmCore.Domain.User.Repositories;
+using CrmCore.Core.Application.User.DTO;
+using CrmCore.Core.Domain.User.Repositories;
 
-namespace CrmCore.Application.User.Queries.GetUserById;
+namespace CrmCore.Core.Application.User.Queries.GetUserById;
 
 public class GetUserByIdQueryHandler
 {

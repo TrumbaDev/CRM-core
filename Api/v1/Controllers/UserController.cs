@@ -1,5 +1,5 @@
-using CrmCore.Application.User.Commands.CreateUser;
-using CrmCore.Application.User.Queries.GetUserById;
+using CrmCore.Core.Application.User.Commands.CreateUser;
+using CrmCore.Core.Application.User.Queries.GetUserById;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CrmCore.Api.v1.Controllers;

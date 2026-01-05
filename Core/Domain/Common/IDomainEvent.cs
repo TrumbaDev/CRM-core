@@ -1,3 +1,3 @@
-namespace CrmCore.Domain.Common;
+namespace CrmCore.Core.Domain.Common;
 
 public interface IDomainEvent { }

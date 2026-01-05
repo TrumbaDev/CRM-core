@@ -1,6 +1,6 @@
 namespace CrmCore.Test.Domain.User.ValueObjects;
 
-using CrmCore.Domain.User.Aggregate;
+using CrmCore.Core.Domain.User.Aggregate;
 using NUnit.Framework;
 
 [TestFixture]

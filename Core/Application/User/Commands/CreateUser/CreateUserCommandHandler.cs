@@ -1,9 +1,9 @@
-using CrmCore.Application.Common.Services;
-using CrmCore.Domain.User.Aggregate;
-using CrmCore.Domain.User.Repositories;
-using UserAggregate = CrmCore.Domain.User.Aggregate.User;
+using CrmCore.Core.Application.Common.Services;
+using CrmCore.Core.Domain.User.Aggregate;
+using CrmCore.Core.Domain.User.Repositories;
+using UserAggregate = CrmCore.Core.Domain.User.Aggregate.User;
 
-namespace CrmCore.Application.User.Commands.CreateUser;
+namespace CrmCore.Core.Application.User.Commands.CreateUser;
 
 public class CreateUserCommandHandler
 {

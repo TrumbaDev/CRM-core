@@ -1,4 +1,4 @@
-namespace CrmCore.Application.User.DTO;
+namespace CrmCore.Core.Application.User.DTO;
 
 public record UserDTO(
     int Id,

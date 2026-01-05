@@ -1,9 +1,9 @@
 namespace CrmCore.Tests.Application.User.Queries;
 
-using CrmCore.Application.User.DTO;
-using CrmCore.Application.User.Queries.GetUserById;
-using CrmCore.Domain.User.Aggregate;
-using CrmCore.Domain.User.Repositories;
+using CrmCore.Core.Application.User.DTO;
+using CrmCore.Core.Application.User.Queries.GetUserById;
+using CrmCore.Core.Domain.User.Aggregate;
+using CrmCore.Core.Domain.User.Repositories;
 using Moq;
 using NUnit.Framework;
 

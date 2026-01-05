@@ -1,7 +1,7 @@
 namespace CrmCore.Test.Domain.User.Aggregate;
 
-using CrmCore.Domain.User.Aggregate;
-using CrmCore.Domain.User.Events;
+using CrmCore.Core.Domain.User.Aggregate;
+using CrmCore.Core.Domain.User.Events;
 using NUnit.Framework;
 
 [TestFixture]

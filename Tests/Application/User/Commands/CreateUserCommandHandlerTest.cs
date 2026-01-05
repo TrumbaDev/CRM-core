@@ -1,8 +1,8 @@
 namespace CrmCore.Tests.Application.User.Commands;
 
-using CrmCore.Application.User.Commands.CreateUser;
-using CrmCore.Domain.User.Aggregate;
-using CrmCore.Domain.User.Repositories;
+using CrmCore.Core.Application.User.Commands.CreateUser;
+using CrmCore.Core.Domain.User.Aggregate;
+using CrmCore.Core.Domain.User.Repositories;
 using Moq;
 using NUnit.Framework;
 

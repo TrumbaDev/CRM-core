@@ -1,4 +1,4 @@
-namespace CrmCore.Domain.User.Aggregate;
+namespace CrmCore.Core.Domain.User.Aggregate;
 
 public record FullName
 {

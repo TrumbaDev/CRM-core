@@ -1,6 +1,6 @@
-using UserAggregate = CrmCore.Domain.User.Aggregate.User;
+using UserAggregate = CrmCore.Core.Domain.User.Aggregate.User;
 
-namespace CrmCore.Domain.User.Repositories;
+namespace CrmCore.Core.Domain.User.Repositories;
 
 public interface IUserRepository
 {

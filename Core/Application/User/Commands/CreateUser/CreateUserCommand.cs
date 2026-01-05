@@ -1,4 +1,4 @@
-namespace CrmCore.Application.User.Commands.CreateUser;
+namespace CrmCore.Core.Application.User.Commands.CreateUser;
 
 public record CreateUserCommand(
     string First,

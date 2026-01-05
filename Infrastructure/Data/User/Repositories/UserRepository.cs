@@ -1,8 +1,8 @@
-using CrmCore.Domain.User.Aggregate;
-using CrmCore.Domain.User.Repositories;
+using CrmCore.Core.Domain.User.Aggregate;
+using CrmCore.Core.Domain.User.Repositories;
 using CrmCore.Infrastructure.Data.User.Models;
 using Microsoft.EntityFrameworkCore;
-using UserAggregate = CrmCore.Domain.User.Aggregate.User;
+using UserAggregate = CrmCore.Core.Domain.User.Aggregate.User;
 
 namespace CrmCore.Infrastructure.Data.User.Repositories;
 

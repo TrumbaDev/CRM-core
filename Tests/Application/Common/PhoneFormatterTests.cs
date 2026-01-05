@@ -1,6 +1,6 @@
 namespace CrmCore.Tests.Application.Common;
 
-using CrmCore.Application.Common.Services;
+using CrmCore.Core.Application.Common.Services;
 using NUnit.Framework;
 
 [TestFixture]

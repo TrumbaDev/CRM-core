@@ -1,7 +1,7 @@
-using CrmCore.Domain.Common;
-using CrmCore.Domain.User.Events;
+using CrmCore.Core.Domain.Common;
+using CrmCore.Core.Domain.User.Events;
 
-namespace CrmCore.Domain.User.Aggregate;
+namespace CrmCore.Core.Domain.User.Aggregate;
 
 public class User
 {
