@@ -1,4 +1,3 @@
-using CrmCore.Infrastructure.Data.User.Models;
 
 namespace CrmCore.Infrastructure.Data.Task.Models;
 
@@ -10,7 +9,6 @@ public class TaskObserverModel
     public TaskModel Task { get; set; } = null!;
 
     public int UserId { get; set; }
-    public UserModel User { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

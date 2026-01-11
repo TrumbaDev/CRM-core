@@ -29,18 +29,8 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskModel>
         builder.Property(x => x.ExecutorId)
             .IsRequired();
 
-        builder.HasOne(x => x.Executor)
-            .WithMany()
-            .HasForeignKey(x => x.ExecutorId)
-            .OnDelete(DeleteBehavior.Restrict);
-
         builder.Property(x => x.DirectorId)
             .IsRequired();
-
-        builder.HasOne(x => x.Director)
-            .WithMany()
-            .HasForeignKey(x => x.DirectorId)
-            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(x => x.CoExecutors)
             .WithOne(x => x.Task)

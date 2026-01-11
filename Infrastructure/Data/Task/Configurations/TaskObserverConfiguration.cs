@@ -21,10 +21,6 @@ public class TaskObserverConfiguration : IEntityTypeConfiguration<TaskObserverMo
             .WithMany(x => x.Observers)
             .HasForeignKey(x => x.TaskId);
 
-        builder.HasOne(x => x.User)
-            .WithMany()
-            .HasForeignKey(x => x.UserId);
-
         builder.Property(x => x.CreatedAt)
            .HasColumnType("timestamp")
            .HasDefaultValueSql("NOW()")

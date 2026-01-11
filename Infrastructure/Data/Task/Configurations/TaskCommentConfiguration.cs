@@ -21,10 +21,6 @@ public class TaskCommentConfiguration : IEntityTypeConfiguration<TaskCommentMode
             .WithMany(x => x.Comments)
             .HasForeignKey(x => x.TaskId);
 
-        builder.HasOne(x => x.User)
-            .WithMany()
-            .HasForeignKey(x => x.UserId);
-
         builder.Property(x => x.Value)
             .HasMaxLength(255);
 

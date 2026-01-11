@@ -1,8 +1,10 @@
 using CrmCore.Infrastructure.Data.User.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CrmCore.Infrastructure.Data.User;
 
+[Migration("User")]
 public class UserDbContext : DbContext
 {
     public DbSet<UserModel> Users => Set<UserModel>();

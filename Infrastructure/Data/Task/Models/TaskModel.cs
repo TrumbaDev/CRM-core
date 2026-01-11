@@ -1,5 +1,4 @@
 using CrmCore.Core.Domain.Task.Aggregate;
-using CrmCore.Infrastructure.Data.User.Models;
 
 namespace CrmCore.Infrastructure.Data.Task.Models;
 
@@ -12,10 +11,8 @@ public class TaskModel
     public Status Status { get; set; }
 
     public int ExecutorId { get; set; }
-    public UserModel Executor { get; set; } = null!;
 
     public int DirectorId { get; set; }
-    public UserModel Director { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

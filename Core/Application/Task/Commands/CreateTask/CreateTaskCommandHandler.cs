@@ -19,14 +19,10 @@ public class CreateTaskCommandHandler: IRequestHandler<CreateTaskCommand, int>
     public async Task<int> Handle(CreateTaskCommand cmd, CancellationToken cancellationToken)
     {
         Executor executor = Executor.Create(
-            cmd.Executor.FisrtName,
-            cmd.Executor.LastName,
-            cmd.Executor.MiddleName
+            cmd.Executor.UserId
         );
         Director director = Director.Create(
-            cmd.Director.FisrtName,
-            cmd.Director.LastName,
-            cmd.Director.MiddleName
+            cmd.Director.UserId
         );
 
         TaskAggregate task = TaskAggregate.Create(
@@ -40,18 +36,14 @@ public class CreateTaskCommandHandler: IRequestHandler<CreateTaskCommand, int>
         foreach (TaskUserDTO coExecutor in cmd.CoExecutors)
         {
             task.AddCoExecutor(CoExecutor.Create(
-                coExecutor.FisrtName,
-                coExecutor.LastName,
-                coExecutor.MiddleName
+                coExecutor.UserId
             ));
         }
 
         foreach (TaskUserDTO observer in cmd.Observers)
         {
             task.AddObserver(Observer.Create(
-                observer.FisrtName,
-                observer.LastName,
-                observer.MiddleName
+                observer.UserId
             ));
         }
 

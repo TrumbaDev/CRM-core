@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CrmCore.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20260109063456_User1")]
-    partial class User1
+    [Migration("20260111045101_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,8 +49,6 @@ namespace CrmCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.HasIndex("TaskId", "UserId")
                         .IsUnique();
 
@@ -85,8 +83,6 @@ namespace CrmCore.Migrations
                         .HasColumnType("character varying(255)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("TaskId", "UserId")
                         .IsUnique();
@@ -134,10 +130,6 @@ namespace CrmCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DirectorId");
-
-                    b.HasIndex("ExecutorId");
-
                     b.ToTable("tasks", (string)null);
                 });
 
@@ -164,8 +156,6 @@ namespace CrmCore.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("TaskId", "UserId")
                         .IsUnique();
@@ -227,15 +217,7 @@ namespace CrmCore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CrmCore.Infrastructure.Data.User.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Task");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CrmCore.Infrastructure.Data.Task.Models.TaskCommentModel", b =>
@@ -246,34 +228,7 @@ namespace CrmCore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CrmCore.Infrastructure.Data.User.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Task");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CrmCore.Infrastructure.Data.Task.Models.TaskModel", b =>
-                {
-                    b.HasOne("CrmCore.Infrastructure.Data.User.Models.UserModel", "Director")
-                        .WithMany()
-                        .HasForeignKey("DirectorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CrmCore.Infrastructure.Data.User.Models.UserModel", "Executor")
-                        .WithMany()
-                        .HasForeignKey("ExecutorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Director");
-
-                    b.Navigation("Executor");
                 });
 
             modelBuilder.Entity("CrmCore.Infrastructure.Data.Task.Models.TaskObserverModel", b =>
@@ -284,15 +239,7 @@ namespace CrmCore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CrmCore.Infrastructure.Data.User.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Task");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CrmCore.Infrastructure.Data.Task.Models.TaskModel", b =>

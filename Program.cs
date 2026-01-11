@@ -1,5 +1,7 @@
 using CrmCore.Core.Application.Task.Commands.CreateTask;
+using CrmCore.Core.Domain.Task.Factories;
 using CrmCore.Core.Domain.Task.Repositories;
+using CrmCore.Core.Domain.User.Factories;
 using CrmCore.Core.Domain.User.Repositories;
 using CrmCore.Infrastructure.Data.Task;
 using CrmCore.Infrastructure.Data.Task.Repositories;
@@ -16,7 +18,9 @@ builder.Services.AddDbContext<TaskDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<ITaskRepository, TaskRepositroy>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<UserFactory>();
+builder.Services.AddScoped<TaskAggregateFactory>();
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(

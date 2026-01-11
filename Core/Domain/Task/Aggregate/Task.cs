@@ -78,7 +78,7 @@ public class Task
         return task;
     }
 
-    #region EXECUTOR
+    #region CO-EXECUTOR
     public void AddCoExecutor(CoExecutor coExecutor)
     {
         if (_coExecutors.Any(x => x.UserId == coExecutor.UserId))

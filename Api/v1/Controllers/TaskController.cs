@@ -11,9 +11,7 @@ public class TaskController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public TaskController(
-        IMediator mediator
-    )
+    public TaskController(IMediator mediator)
     {
         _mediator = mediator;
     }
@@ -21,7 +19,7 @@ public class TaskController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        var task = _mediator.Send(new GetTaskByIdQuery(id));
+        var task = await _mediator.Send(new GetTaskByIdQuery(id));
         return task is null ? NotFound() : Ok(task);
     }
 

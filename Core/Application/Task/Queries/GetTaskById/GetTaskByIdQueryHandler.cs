@@ -1,73 +1,37 @@
 using CrmCore.Core.Application.Task.DTO;
 using CrmCore.Core.Domain.Task.Repositories;
+using CrmCore.Core.Domain.User.Repositories;
 using MediatR;
+using UserAggregate = CrmCore.Core.Domain.User.Aggregate.User;
 
 namespace CrmCore.Core.Application.Task.Queries.GetTaskById;
 
 public class GetTaskByIdQueryHandler: IRequestHandler<GetTaskByIdQuery, TaskDTO?>
 {
-    private readonly ITaskRepository _repo;
+    private readonly ITaskRepository _taskRepo;
+    private readonly IUserRepository _userRepo;
 
-    public GetTaskByIdQueryHandler(ITaskRepository repo)
+    public GetTaskByIdQueryHandler(ITaskRepository taskRepo, IUserRepository userRepo)
     {
-        _repo = repo;
+        _taskRepo = taskRepo;
+        _userRepo = userRepo;
     }
 
     public async Task<TaskDTO?> Handle(GetTaskByIdQuery query, CancellationToken cancellationToken)
     {
-        var task = await _repo.GetByIdAsync(query.Id);
+        var task = await _taskRepo.GetByIdAsync(query.Id);
         if(task is null) return null;
 
-        TaskUserDTO executor = new (
-            task.Executor.UserId,
-            task.Executor.Name.First,
-            task.Executor.Name.Last,
-            task.Executor.Name.Middle
-        );
+        List<int> userIds = task.CoExecutors.Select(c => c.UserId)
+                .Concat(task.Observers.Select(o => o.UserId))
+                .Append(task.Executor.UserId)
+                .Append(task.Director.UserId)
+                .Distinct()
+                .ToList();
+        
+        List<UserAggregate> users = await _userRepo.GetByIdsAsync(userIds);
+        if(users.Count == 0) return null;
 
-        TaskUserDTO director = new (
-            task.Director.UserId,
-            task.Director.Name.First,
-            task.Director.Name.Last,
-            task.Director.Name.Middle
-        );
-
-        IReadOnlyCollection<TaskUserDTO> coExecutors = task.CoExecutors
-            .Select(x => new TaskUserDTO(
-                x.UserId,
-                x.Name.First,
-                x.Name.Last,
-                x.Name.Middle
-            )).ToList();
-
-        IReadOnlyCollection<TaskUserDTO> observers = task.Observers
-            .Select(x => new TaskUserDTO(
-                x.UserId,
-                x.Name.First,
-                x.Name.Last,
-                x.Name.Middle
-            )).ToList();
-
-        IReadOnlyCollection<TaskCommentDTO> comments = task.Comments
-            .Select(x => new TaskCommentDTO(
-                x.Id,
-                x.UserId,
-                x.Value,
-                x.Date
-            )).ToList();
-
-        return new TaskDTO(
-            task.Id,
-            task.Title,
-            task.Description,
-            task.DeadLine,
-            task.CreatedAt,
-            task.Status,
-            executor,
-            director,
-            coExecutors,
-            observers,
-            comments
-        );
+       return TaskMapper.ToDTO(task, users);
     }
 }

@@ -14,7 +14,7 @@ services:
     networks:
       - app-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U root" ]
+      test: [ "CMD-SHELL", "pg_isready -U root -d crm_db" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -50,15 +50,9 @@ services:
       - ConnectionStrings__Default=Host=postgres;Port=5432;Database=crm_db;Username=root;Password=password
       - Redis__ConnectionString=redis:6379,password=redis_password,ssl=False,abortConnect=False
       - Redis__InstanceName=crm_core
-      - Cache__Enabled=true
-      - Cache__DefaultExpirationMinutes=30
-      - Cache__SlidingExpirationMinutes=10
-      - DOTNET_USE_POLLING_FILE_WATCHER=1
-      - DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER=1
-      - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=1
+      - Cache__Enabled=false
     volumes:
       - .:/src
-      - ~/.nuget/packages:/root/.nuget/packages
 
     depends_on:
       postgres:

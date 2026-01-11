@@ -7,4 +7,5 @@ public interface IUserRepository
     Task<UserAggregate?> GetByIdAsync(int id);
     Task<int> AddAsync(UserAggregate user);
     Task<UserAggregate?> GetByEmailOrPhoneAsync(string email, string phone);
+    Task<List<UserAggregate>> GetByIdsAsync(List<int> userIds);
 }

@@ -3,21 +3,19 @@ namespace CrmCore.Core.Domain.Task.Aggregate;
 public class Observer
 {
     public int UserId { get; private set; }
-    public FullName Name { get; private set; } = null!;
 
     private Observer() { }
 
-    internal Observer(int userId, FullName name)
+    internal Observer(int userId)
     {
         UserId = userId;
-        Name = name;
     }
 
-    public static Observer Create(string firstName, string lastName, string middleName)
+    public static Observer Create(int userId)
     {
         return new Observer
         {
-            Name = new FullName(firstName, lastName, middleName)
+            UserId = userId
         };
     }
 }

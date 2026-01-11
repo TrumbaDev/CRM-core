@@ -1,4 +1,4 @@
-using CrmCore.Core.Domain.User.Aggregate;
+using CrmCore.Core.Domain.User.Factories;
 using CrmCore.Core.Domain.User.Repositories;
 using CrmCore.Infrastructure.Data.User.Models;
 using Microsoft.EntityFrameworkCore;
@@ -9,23 +9,27 @@ namespace CrmCore.Infrastructure.Data.User.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly UserDbContext _context;
+    private readonly UserFactory _factory;
 
-    public UserRepository(UserDbContext context)
+    public UserRepository(UserDbContext context, UserFactory factory)
     {
         _context = context;
+        _factory = factory;
     }
 
     public async Task<UserAggregate?> GetByIdAsync(int id)
     {
         var model = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
-        if (model is null) return null;
+        return model is null ? null : _factory.Rehydrate(model);
+    }
 
-        return new UserAggregate(
-            model.Id,
-            new FullName(model.FirstName, model.LastName, model.MiddleName),
-            new Email(model.Email),
-            new PhoneNumber(model.Phone)
-        );
+    public async Task<List<UserAggregate>> GetByIdsAsync(List<int> userIds)
+    {
+        List<UserModel> models = await _context.Users
+            .Where(u => userIds.Contains(u.Id))
+            .ToListAsync();
+
+       return _factory.Rehydrate(models);
     }
 
     public async Task<int> AddAsync(UserAggregate user)
@@ -50,13 +54,6 @@ public class UserRepository : IUserRepository
             x => x.Email == email || x.Phone == phone
         );
 
-        if(model is null) return null;
-
-        return new UserAggregate(
-            model.Id,
-            new FullName(model.FirstName, model.LastName, model.MiddleName),
-            new Email(model.Email),
-            new PhoneNumber(model.Phone)
-        );
+       return model is null ? null : _factory.Rehydrate(model);
     }
 }
