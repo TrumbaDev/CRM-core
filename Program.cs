@@ -1,20 +1,28 @@
-using CrmCore.Core.Application.User.Commands.CreateUser;
-using CrmCore.Core.Application.User.Queries.GetUserById;
+using CrmCore.Core.Application.Task.Commands.CreateTask;
+using CrmCore.Core.Domain.Task.Repositories;
 using CrmCore.Core.Domain.User.Repositories;
+using CrmCore.Infrastructure.Data.Task;
+using CrmCore.Infrastructure.Data.Task.Repositories;
 using CrmCore.Infrastructure.Data.User;
 using CrmCore.Infrastructure.Data.User.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddDbContext<TaskDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepositroy>();
 
-
-builder.Services.AddScoped<CreateUserCommandHandler>();
-builder.Services.AddScoped<GetUserByIdQueryHandler>();
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(
+        typeof(CreateTaskCommandHandler).Assembly
+    )
+);
 
 builder.Services.AddControllers();
 

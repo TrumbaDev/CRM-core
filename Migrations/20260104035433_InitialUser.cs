@@ -30,21 +30,6 @@ namespace CrmCore.Migrations
                 {
                     table.PrimaryKey("PK_users", x => x.Id);
                 });
-
-            migrationBuilder.Sql(
-                @"CREATE OR REPLACE FUNCTION update_updated_at_column()
-                RETURNS TRIGGER AS $$
-                BEGIN
-                    NEW.""UpdatedAt"" = NOW();
-                    RETURN NEW;
-                END;
-                $$ language 'plpgsql';");
-
-            migrationBuilder.Sql(
-                @"CREATE TRIGGER update_users_updated_at
-                BEFORE UPDATE ON users
-                FOR EACH ROW
-                EXECUTE FUNCTION update_updated_at_column();");
         }
 
         /// <inheritdoc />

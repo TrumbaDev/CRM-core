@@ -25,16 +25,16 @@ public class UserController : ControllerBase
     {
         try
         {
-            var id = await _create.Handle(cmd);
+            int id = await _create.Handle(cmd);
             return Ok(new { id });
         }
         catch (InvalidOperationException ex)
         {
             return BadRequest(ex.Message);
         }
-        catch (System.Exception)
+        catch (Exception ex)
         {
-            return BadRequest("User create Failed");
+            return BadRequest("User create Failed: " + ex.Message);
         }
     }
 

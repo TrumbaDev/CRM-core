@@ -24,11 +24,11 @@ public class UserConfiguration : IEntityTypeConfiguration<UserModel>
         builder.Property(x => x.CreatedAt)
             .HasColumnType("timestamp")
             .HasDefaultValueSql("NOW()")
-            .ValueGeneratedOnAdd();
+            .ValueGeneratedNever();
         
         builder.Property(x => x.UpdatedAt)
             .HasColumnType("timestamp")
             .HasDefaultValueSql("NOW()")
-            .ValueGeneratedOnAdd();
+            .ValueGeneratedNever();
     }
 }
