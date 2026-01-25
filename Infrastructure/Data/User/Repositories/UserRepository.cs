@@ -19,7 +19,7 @@ public class UserRepository : IUserRepository
 
     public async Task<UserAggregate?> GetByIdAsync(int id)
     {
-        var model = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+        UserModel? model = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         return model is null ? null : _factory.Rehydrate(model);
     }
 

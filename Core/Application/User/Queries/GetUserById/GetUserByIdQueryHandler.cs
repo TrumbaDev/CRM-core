@@ -1,9 +1,10 @@
 using CrmCore.Core.Application.User.DTO;
 using CrmCore.Core.Domain.User.Repositories;
+using MediatR;
 
 namespace CrmCore.Core.Application.User.Queries.GetUserById;
 
-public class GetUserByIdQueryHandler
+public class GetUserByIdQueryHandler: IRequestHandler<GetUserByIdQuery, UserDTO?>
 {
     private readonly IUserRepository _repo;
 
@@ -12,7 +13,7 @@ public class GetUserByIdQueryHandler
         _repo = repo;
     }
 
-    public async Task<UserDTO?> Handle(GetUserByIdQuery query)
+    public async Task<UserDTO?> Handle(GetUserByIdQuery query, CancellationToken cancellationToken)
     {
         var user = await _repo.GetByIdAsync(query.Id);
         if(user is null) return null;

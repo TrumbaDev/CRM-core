@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CrmCore.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20260111045101_Init")]
+    [Migration("20260125025856_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -99,6 +99,7 @@ namespace CrmCore.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityAlwaysColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("NOW()");
 
@@ -125,6 +126,7 @@ namespace CrmCore.Migrations
                         .HasColumnType("character varying(255)");
 
                     b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("NOW()");
 

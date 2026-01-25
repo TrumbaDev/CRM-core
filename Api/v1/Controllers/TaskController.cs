@@ -1,4 +1,5 @@
 using CrmCore.Core.Application.Task.Commands.CreateTask;
+using CrmCore.Core.Application.Task.DTO;
 using CrmCore.Core.Application.Task.Queries.GetTaskById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ public class TaskController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        var task = await _mediator.Send(new GetTaskByIdQuery(id));
+        TaskDTO? task = await _mediator.Send(new GetTaskByIdQuery(id));
         return task is null ? NotFound() : Ok(task);
     }
 
@@ -31,9 +32,13 @@ public class TaskController : ControllerBase
             int id = await _mediator.Send(cmd);
             return Ok(new { id });
         }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
         catch (Exception ex)
         {
-            return BadRequest("Task create Failed: " + ex.Message);
+            return BadRequest("Task create failed: " + ex.Message);
         }
     }
 }

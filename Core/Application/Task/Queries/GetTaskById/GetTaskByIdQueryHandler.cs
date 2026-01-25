@@ -3,6 +3,7 @@ using CrmCore.Core.Domain.Task.Repositories;
 using CrmCore.Core.Domain.User.Repositories;
 using MediatR;
 using UserAggregate = CrmCore.Core.Domain.User.Aggregate.User;
+using TaskAggregate = CrmCore.Core.Domain.Task.Aggregate.Task;
 
 namespace CrmCore.Core.Application.Task.Queries.GetTaskById;
 
@@ -19,7 +20,7 @@ public class GetTaskByIdQueryHandler: IRequestHandler<GetTaskByIdQuery, TaskDTO?
 
     public async Task<TaskDTO?> Handle(GetTaskByIdQuery query, CancellationToken cancellationToken)
     {
-        var task = await _taskRepo.GetByIdAsync(query.Id);
+        TaskAggregate? task = await _taskRepo.GetByIdAsync(query.Id);
         if(task is null) return null;
 
         List<int> userIds = task.CoExecutors.Select(c => c.UserId)

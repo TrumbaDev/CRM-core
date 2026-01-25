@@ -24,11 +24,11 @@ public class TaskObserverConfiguration : IEntityTypeConfiguration<TaskObserverMo
         builder.Property(x => x.CreatedAt)
            .HasColumnType("timestamp")
            .HasDefaultValueSql("NOW()")
-           .ValueGeneratedNever();
+           .ValueGeneratedOnAdd();
 
         builder.Property(x => x.UpdatedAt)
             .HasColumnType("timestamp")
             .HasDefaultValueSql("NOW()")
-            .ValueGeneratedNever();
+            .ValueGeneratedOnAddOrUpdate();
     }
 }

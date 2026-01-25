@@ -1,10 +1,8 @@
 using CrmCore.Infrastructure.Data.Task.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CrmCore.Infrastructure.Data.Task;
 
-[Migration("Task")]
 public class TaskDbContext : DbContext
 {
     public DbSet<TaskModel> Task => Set<TaskModel>();

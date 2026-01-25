@@ -1,3 +1,5 @@
+using MediatR;
+
 namespace CrmCore.Core.Application.User.Commands.CreateUser;
 
 public record CreateUserCommand(
@@ -6,4 +8,4 @@ public record CreateUserCommand(
     string Middle,
     string Email,
     string Phone
-);
+): IRequest<int>;

@@ -18,7 +18,8 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskModel>
             .HasMaxLength(255);
 
         builder.Property(x => x.Description)
-            .HasMaxLength(2000);
+            .HasMaxLength(2000)
+            .HasDefaultValue(null);
 
         builder.Property(x => x.Status)
             .IsRequired();
@@ -50,11 +51,11 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskModel>
         builder.Property(x => x.CreatedAt)
           .HasColumnType("timestamp")
           .HasDefaultValueSql("NOW()")
-          .ValueGeneratedNever();
+          .ValueGeneratedOnAdd();
 
         builder.Property(x => x.UpdatedAt)
             .HasColumnType("timestamp")
             .HasDefaultValueSql("NOW()")
-            .ValueGeneratedNever();
+            .ValueGeneratedOnAddOrUpdate();
     }
 }

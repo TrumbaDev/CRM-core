@@ -20,7 +20,7 @@ public class TaskRepository : ITaskRepository
 
     public async Task<TaskAggregate?> GetByIdAsync(int id)
     {
-        var model = await _context.Task
+        TaskModel? model = await _context.Task
             .Include(t => t.CoExecutors)
             .Include(t => t.Observers)
             .Include(t => t.Comments)
@@ -54,15 +54,6 @@ public class TaskRepository : ITaskRepository
             model.Observers.Add(new TaskObserverModel
             {
                 UserId = obs.UserId
-            });
-        }
-
-        foreach (Comment comment in task.Comments)
-        {
-            model.Comments.Add(new TaskCommentModel
-            {
-                UserId = comment.UserId,
-                Value = comment.Value
             });
         }
 
