@@ -6,4 +6,5 @@ public interface ITaskRepository
 {
     Task<TaskAggregate?> GetByIdAsync(int id);
     Task<int> AddAsync(TaskAggregate taks);
+    Task<int> AddCommentAsync(TaskAggregate task);
 }

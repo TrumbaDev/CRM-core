@@ -1,3 +1,4 @@
+using CrmCore.Core.Application.Task.Commands.AddComment;
 using CrmCore.Core.Application.Task.Commands.CreateTask;
 using CrmCore.Core.Application.Task.DTO;
 using CrmCore.Core.Application.Task.Queries.GetTaskById;
@@ -39,6 +40,20 @@ public class TaskController : ControllerBase
         catch (Exception ex)
         {
             return BadRequest("Task create failed: " + ex.Message);
+        }
+    }
+
+    [HttpPost("comment")]
+    public async Task<IActionResult> AddComment(AddCommentCommand cmd)
+    {
+        try
+        {
+            int id = await _mediator.Send(cmd);
+            return Ok(new { id });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest("Add comment failed: " + ex.Message);
         }
     }
 }

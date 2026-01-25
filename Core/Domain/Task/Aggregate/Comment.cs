@@ -16,4 +16,13 @@ public class Comment
         Value = value;
         Date = date;
     }
+
+    public static Comment Create(int userId, string value)
+    {
+        return new Comment
+        {
+            UserId = userId,
+            Value = value
+        };
+    }
 }

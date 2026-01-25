@@ -61,4 +61,22 @@ public class TaskRepository : ITaskRepository
         await _context.SaveChangesAsync();
         return model.Id;
     }
+
+    public async Task<int> AddCommentAsync(TaskAggregate task)
+    {
+        TaskModel model = await _context.Task
+            .Include(t => t.Comments)
+            .FirstOrDefaultAsync(t => t.Id == task.Id)
+            ?? throw new Exception("Task not found");
+
+        Comment lastComment = task.Comments.Last();
+        model.Comments.Add(new TaskCommentModel
+        {
+            TaskId = task.Id,
+            UserId = lastComment.UserId,
+            Value = lastComment.Value
+        });
+        await _context.SaveChangesAsync();
+        return model.Comments.Last().Id;
+    }
 }
