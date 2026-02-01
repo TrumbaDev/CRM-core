@@ -1,3 +1,4 @@
+using CrmCore.Core.Application.Common.Exceptions;
 using CrmCore.Core.Domain.Task.Aggregate;
 using CrmCore.Core.Domain.Task.Factories;
 using CrmCore.Core.Domain.Task.Repositories;
@@ -67,7 +68,7 @@ public class TaskRepository : ITaskRepository
         TaskModel model = await _context.Task
             .Include(t => t.Comments)
             .FirstOrDefaultAsync(t => t.Id == task.Id)
-            ?? throw new Exception("Task not found");
+            ?? throw new RepositoryException("Task not found");
 
         Comment lastComment = task.Comments.Last();
         model.Comments.Add(new TaskCommentModel

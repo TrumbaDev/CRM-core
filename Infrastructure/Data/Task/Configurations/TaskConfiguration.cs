@@ -34,17 +34,17 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskModel>
             .IsRequired();
 
         builder.HasMany(x => x.CoExecutors)
-            .WithOne(x => x.Task)
+            .WithOne()
             .HasForeignKey(x => x.TaskId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Observers)
-            .WithOne(x => x.Task)
+            .WithOne()
             .HasForeignKey(x => x.TaskId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Comments)
-            .WithOne(x => x.Task)
+            .WithOne()
             .HasForeignKey(x => x.TaskId)
             .OnDelete(DeleteBehavior.Cascade);
 

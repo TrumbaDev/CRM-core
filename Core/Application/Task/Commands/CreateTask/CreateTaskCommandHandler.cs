@@ -71,9 +71,7 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, int>
         if (cmd.Observers is not null)
             userIds.AddRange(cmd.Observers.Select(x => x.UserId));
 
-        userIds = userIds.Distinct().ToList();
-
-        List<UserAggregate> users = await _userRepo.GetByIdsAsync(userIds);
+        List<UserAggregate> users = await _userRepo.GetByIdsAsync(userIds.Distinct().ToList());
         return users.Count;
     }
 }

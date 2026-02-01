@@ -6,7 +6,6 @@ public class TaskObserverModel
     public int Id { get; set; }
 
     public int TaskId { get; set; }
-    public TaskModel Task { get; set; } = null!;
 
     public int UserId { get; set; }
 

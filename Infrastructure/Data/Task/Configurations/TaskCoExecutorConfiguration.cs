@@ -17,10 +17,6 @@ public class TaskCoExecutorConfiguration : IEntityTypeConfiguration<TaskCoExecut
         builder.HasIndex(x => new { x.TaskId, x.UserId })
             .IsUnique();
 
-        builder.HasOne(x => x.Task)
-            .WithMany(x => x.CoExecutors)
-            .HasForeignKey(x => x.TaskId);
-
         builder.Property(x => x.CreatedAt)
            .HasColumnType("timestamp")
            .HasDefaultValueSql("NOW()")

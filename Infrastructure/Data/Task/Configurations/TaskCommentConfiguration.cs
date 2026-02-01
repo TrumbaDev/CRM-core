@@ -14,12 +14,7 @@ public class TaskCommentConfiguration : IEntityTypeConfiguration<TaskCommentMode
         builder.Property(x => x.Id)
             .UseIdentityAlwaysColumn();
 
-        builder.HasIndex(x => new { x.TaskId, x.UserId })
-            .IsUnique();
-
-        builder.HasOne(x => x.Task)
-            .WithMany(x => x.Comments)
-            .HasForeignKey(x => x.TaskId);
+        builder.HasIndex(x => new { x.TaskId, x.UserId });
 
         builder.Property(x => x.Value)
             .HasMaxLength(255);
