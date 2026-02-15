@@ -1,3 +1,5 @@
+using CrmCore.Core.Domain.SalesFunnel.ValueObjects;
+
 namespace CrmCore.Core.Domain.SalesFunnel.Aggregate;
 
 public class FunnelStage
@@ -28,5 +30,19 @@ public class FunnelStage
     public void Rename(string name)
     {
         Name = name;
+    }
+
+    public bool IsDefaultStage()
+    {
+        return IndexNumber == DefaultNewStage.Index ||
+            IndexNumber == DefaultFailedStage.Index ||
+            IndexNumber == DefaultSuccessStage.Index;
+    }
+
+    public void ShiftToLeft()
+    {
+        if (IsDefaultStage()) return;
+
+        IndexNumber--;
     }
 }

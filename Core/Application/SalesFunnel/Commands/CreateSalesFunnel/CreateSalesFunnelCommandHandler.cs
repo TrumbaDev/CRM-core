@@ -1,4 +1,4 @@
-using CrmCore.Core.Domain.Task.Repositories;
+using CrmCore.Core.Domain.SalesFunnel.Repositories;
 using MediatR;
 using SalesFunnelAggregate = CrmCore.Core.Domain.SalesFunnel.Aggregate.SalesFunnel;
 

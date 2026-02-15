@@ -1,3 +1,5 @@
+using CrmCore.Core.Application.Common.Domains.Exceptions;
+using CrmCore.Core.Application.Common.Exceptions;
 using CrmCore.Core.Domain.SalesFunnel.ValueObjects;
 
 namespace CrmCore.Core.Domain.SalesFunnel.Aggregate;
@@ -50,11 +52,40 @@ public class SalesFunnel
 
     public void AddFunnelStage(FunnelStage stage)
     {
+        if (stage.IndexNumber >= DefaultFailedStage.Index)
+            throw new SalesFunnelException("Stage index number must be not greater than " + DefaultFailedStage.Index);
+
+        if (stage.IndexNumber <= DefaultNewStage.Index)
+            throw new SalesFunnelException("Stage index number must be greater than " + DefaultNewStage.Index);
+
+        if (_funnelStages.Any(x => x.IndexNumber == stage.IndexNumber))
+            throw new SalesFunnelException("Stage with index number " + stage.IndexNumber + " already exists");
+
         _funnelStages.Add(stage);
     }
 
     public void RenameStage(int stageId, string name)
     {
-        _funnelStages.First(x => x.Id == stageId).Rename(name);
+        FunnelStage stage = _funnelStages.FirstOrDefault(x => x.Id == stageId)
+            ?? throw new NotFoundException("Undefined stage with id: " + stageId);
+
+        stage.Rename(name);
+    }
+
+    public void DeleteStage(int stageId)
+    {
+        FunnelStage stage = _funnelStages.FirstOrDefault(x => x.Id == stageId)
+            ?? throw new NotFoundException("Undefined stage with id: " + stageId);
+
+        if (stage.IsDefaultStage())
+            throw new SystemException("Cannot delete default stage");
+
+        if (!_funnelStages.Remove(stage))
+            throw new SalesFunnelException("Could not remove stage with id " + stageId);
+
+        foreach (FunnelStage s in _funnelStages.Where(x => x.IndexNumber > stage.IndexNumber))
+        {
+            s.ShiftToLeft();
+        }
     }
 }

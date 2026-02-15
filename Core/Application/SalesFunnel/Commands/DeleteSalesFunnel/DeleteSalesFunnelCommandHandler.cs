@@ -1,4 +1,4 @@
-using CrmCore.Core.Domain.Task.Repositories;
+using CrmCore.Core.Domain.SalesFunnel.Repositories;
 using MediatR;
 
 namespace CrmCore.Core.Application.SalesFunnel.Commands.DeleteSalesFunnel;

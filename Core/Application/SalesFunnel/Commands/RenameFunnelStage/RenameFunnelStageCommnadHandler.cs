@@ -1,5 +1,5 @@
 using CrmCore.Core.Application.Common.Exceptions;
-using CrmCore.Core.Domain.Task.Repositories;
+using CrmCore.Core.Domain.SalesFunnel.Repositories;
 using MediatR;
 using SalesFunnelAggregate = CrmCore.Core.Domain.SalesFunnel.Aggregate.SalesFunnel;
 
@@ -19,6 +19,6 @@ public class RenameFunnelStageCommandHandler: IRequestHandler<RenameFunnelStageC
         SalesFunnelAggregate salesFunnel = await _salesFunnelRepo.GetByIdAsync(cmd.FunnelId)
             ?? throw new NotFoundException("Sales funnel not found");
         salesFunnel.RenameStage(cmd.StageId, cmd.Name);
-        return await _salesFunnelRepo.RenameStageAsync(salesFunnel);
+        return await _salesFunnelRepo.RenameStageAsync(salesFunnel, cmd.StageId);
     }
 }

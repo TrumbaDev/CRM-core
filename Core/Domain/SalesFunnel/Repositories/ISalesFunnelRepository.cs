@@ -1,6 +1,7 @@
 using SalesFunnelAggregate = CrmCore.Core.Domain.SalesFunnel.Aggregate.SalesFunnel;
+using SystemTask = System.Threading.Tasks.Task;
 
-namespace CrmCore.Core.Domain.Task.Repositories;
+namespace CrmCore.Core.Domain.SalesFunnel.Repositories;
 
 public interface ISalesFunnelRepository
 {
@@ -11,5 +12,6 @@ public interface ISalesFunnelRepository
     Task<int> RenameAsync(SalesFunnelAggregate salesFunnel);
     Task<int> AddStageAsync(SalesFunnelAggregate salesFunnel);
     Task<int> DeleteStageAsync(int id);
-    Task<int> RenameStageAsync(SalesFunnelAggregate salesFunnel);
+    Task<int> RenameStageAsync(SalesFunnelAggregate salesFunnel, int renamedStageId);
+    SystemTask UpdateStagesIndexAsync(SalesFunnelAggregate salesFunnel);
 }
